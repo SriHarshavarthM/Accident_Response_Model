@@ -126,11 +126,24 @@ function Dashboard() {
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
         if (file) {
+            setLoading(true);
             try {
                 const result = await api.uploadVideo(1, file);
-                alert(`Video uploaded successfully! File ID: ${result.file_id}`);
+
+                if (result.incident_created) {
+                    alert(`🚨 INCIDENT DETECTED!\n\nType: ${result.incident_type}\nSeverity: ${result.severity}\nConfidence: ${(result.confidence_score * 100).toFixed(0)}%\n\nIncident ID: ${result.incident_id}`);
+                    // Refresh data to show new incident
+                    await fetchData();
+                } else {
+                    alert(`✅ Video analyzed.\n\nNo incidents detected in this video.`);
+                }
             } catch (err) {
+                console.error('Upload error:', err);
                 alert('Failed to upload video. Please check if backend is running.');
+            } finally {
+                setLoading(false);
+                // Reset file input
+                e.target.value = '';
             }
         }
     };

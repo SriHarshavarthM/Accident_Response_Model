@@ -217,12 +217,18 @@ def close_incident(
 @router.post("/upload-video")
 async def upload_video(
     camera_id: int,
-    file: UploadFile = File(...)
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
 ):
-    """Upload video for ML processing"""
+    """Upload video for ML processing and incident detection"""
     # Validate file type
     if not file.filename.endswith(('.mp4', '.avi', '.mov', '.mkv')):
         raise HTTPException(status_code=400, detail="Invalid video format. Supported: MP4, AVI, MOV, MKV")
+    
+    # Verify camera exists
+    camera = db.query(Camera).filter(Camera.id == camera_id).first()
+    if not camera:
+        raise HTTPException(status_code=404, detail=f"Camera {camera_id} not found")
     
     # Create upload directory
     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
@@ -234,10 +240,43 @@ async def upload_video(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    return {
-        "message": "Video uploaded successfully",
-        "file_id": file_id,
-        "file_path": file_path,
-        "camera_id": camera_id,
-        "status": "queued_for_processing"
-    }
+    # Process video and detect incidents
+    from services.video_processor import process_video_async
+    import asyncio
+    
+    try:
+        result = await process_video_async(file_path, camera_id, db)
+        
+        if result.get("detected"):
+            return {
+                "message": "🚨 INCIDENT DETECTED!",
+                "file_id": file_id,
+                "incident_created": True,
+                "incident_id": result.get("incident_id"),
+                "incident_db_id": result.get("incident_db_id"),
+                "incident_type": result.get("incident_type"),
+                "severity": result.get("severity"),
+                "confidence_score": result.get("confidence_score"),
+                "description": result.get("description"),
+                "status": "incident_created"
+            }
+        else:
+            return {
+                "message": "Video analyzed - No incidents detected",
+                "file_id": file_id,
+                "incident_created": False,
+                "analysis_summary": result.get("analysis_summary"),
+                "status": "no_incident"
+            }
+    except Exception as e:
+        # Log error but still return success for upload
+        print(f"Error processing video: {e}")
+        return {
+            "message": "Video uploaded but processing failed",
+            "file_id": file_id,
+            "file_path": file_path,
+            "camera_id": camera_id,
+            "status": "processing_error",
+            "error": str(e)
+        }
+
