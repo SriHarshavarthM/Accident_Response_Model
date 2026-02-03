@@ -63,13 +63,13 @@ const DEMO_INCIDENTS = [
 ];
 
 function Dashboard() {
-    const [incidents, setIncidents] = useState(DEMO_INCIDENTS);
+    const [incidents, setIncidents] = useState([]);
     const [stats, setStats] = useState({
-        active_incidents: 4,
-        today_incidents: 12,
-        pending_verification: 2,
-        dispatched_ambulances: 1,
-        police_reports_sent: 3
+        active_incidents: 0,
+        today_incidents: 0,
+        pending_verification: 0,
+        dispatched_ambulances: 0,
+        police_reports_sent: 0
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

@@ -2,7 +2,7 @@
  * API Service for Backend Communication
  */
 
-const API_BASE = '/api/v1';
+const API_BASE = 'http://localhost:8000/api/v1';
 
 class ApiService {
     constructor() {
