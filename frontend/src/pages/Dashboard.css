@@ -1,0 +1,36 @@
+.dashboard {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.upload-btn {
+    cursor: pointer;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+.incident-count {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accident Incident Responder System - Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #16213e;
+            --bg-card: #1a1a2e;
+            --accent-primary: #4361ee;
+            --accent-secondary: #7209b7;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --severity-critical: #ff006e;
+            --severity-high: #ff5c33;
+            --severity-medium: #ffbe0b;
+            --severity-low: #06d6a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--accent-secondary) 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: var(--accent-primary);
+        }
+
+        .badge-success {
+            background: var(--severity-low);
+            color: #000;
+        }
+
+        .badge-warning {
+            background: var(--severity-medium);
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: var(--text-primary);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+        }
+
+        .workflow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .workflow-step {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            width: 180px;
+            position: relative;
+        }
+
+        .workflow-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        .workflow-step:last-child::after {
+            display: none;
+        }
+
+        .workflow-step .step-num {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: 700;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background: var(--bg-secondary);
+            padding: 12px 24px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .severity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .severity-table th,
+        .severity-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .severity-table th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .severity-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .api-endpoint {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .method {
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .method-get {
+            background: var(--severity-low);
+            color: #000;
+        }
+
+        .method-post {
+            background: var(--accent-primary);
+        }
+
+        .code-block {
+            background: #0d1117;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'Consolas', monospace;
+            color: #c9d1d9;
+            font-size: 0.9rem;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border-left: 4px solid var(--accent-primary);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+
+        .compliance-box {
+            background: rgba(255, 190, 11, 0.1);
+            border: 1px solid var(--severity-medium);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .compliance-box h4 {
+            color: var(--severity-medium);
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .workflow-step::after {
+                display: none;
+            }
+
+            .workflow-step {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>🚨 Accident Incident Responder System</h1>
+        <p>An ML-powered emergency response platform for detecting road accidents from CCTV footage with automated
+            police reporting and ambulance dispatch capabilities.</p>
+        <div class="hero-badges">
+            <span class="badge badge-primary">YOLOv8 Detection</span>
+            <span class="badge badge-success">Real-time Dashboard</span>
+            <span class="badge badge-warning">India Compliant</span>
+        </div>
+    </header>
+
+    <!-- System Overview -->
+    <div class="container">
+        <section class="section">
+            <h2>📋 System Overview</h2>
+            <p>The Accident Incident Responder System is designed for smart cities, highways, and government pilots in
+                India. It uses computer vision and machine learning to automatically detect road accidents and
+                coordinate emergency response.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🎥</div>
+                    <h4>Video Ingestion</h4>
+                    <p>Supports MP4, AVI, MOV video uploads for testing. RTSP live feed ready for production deployment.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h4>ML Detection Engine</h4>
+                    <p>YOLOv8-based detection for vehicle collisions, rollovers, and pedestrian impacts with 85%+
+                        confidence threshold.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h4>Real-time Dashboard</h4>
+                    <p>React-based control room with live incident feed, interactive maps, and analytics visualizations.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚔</div>
+                    <h4>Police Reporting</h4>
+                    <p>Automatic incident report generation with email/API delivery to nearest police station.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚑</div>
+                    <h4>Ambulance Dispatch</h4>
+                    <p>Operator-confirmed ambulance dispatch with ERSS-112 and 108 service integration.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👤</div>
+                    <h4>Human-in-the-Loop</h4>
+                    <p>Mandatory verification before dispatch actions for legal compliance and false-positive
+                        mitigation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section">
+            <h2>⚙️ How It Works</h2>
+            <p>The system follows a structured workflow from detection to resolution:</p>
+
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-num">1</div>
+                    <strong>Video Input</strong>
+                    <p>Upload CCTV footage</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-num">2</div>
+                    <strong>ML Analysis</strong>
+                    <p>YOLOv8 detection</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-num">3</div>
+                    <strong>Alert Generated</strong>
+                    <p>Dashboard notification</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-num">4</div>
+                    <strong>Verification</strong>
+                    <p>Operator confirms</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-num">5</div>
+                    <strong>Dispatch</strong>
+                    <p>Police & Ambulance</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ML Detection -->
+        <section class="section">
+            <h2>🧠 ML Detection Engine</h2>
+
+            <h3>Incident Types Detected</h3>
+            <table class="severity-table">
+                <thead>
+                    <tr>
+                        <th>Incident Type</th>
+                        <th>Description</th>
+                        <th>Detection Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vehicle Collision</td>
+                        <td>Two vehicles impacting each other</td>
+                        <td>Bounding box overlap + motion analysis</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-Vehicle Pile-up</td>
+                        <td>3+ vehicles in chain collision</td>
+                        <td>Multiple vehicle tracking</td>
+                    </tr>
+                    <tr>
+                        <td>Rollover</td>
+                        <td>Vehicle overturning</td>
+                        <td>Orientation change detection</td>
+                    </tr>
+                    <tr>
+                        <td>Pedestrian Impact</td>
+                        <td>Vehicle-pedestrian collision</td>
+                        <td>Person + vehicle proximity</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Severity Scoring</h3>
+            <table class="severity-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Score Range</th>
+                        <th>Indicators</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="severity-dot" style="background: #ff006e"></span>CRITICAL</td>
+                        <td>≥ 6.0</td>
+                        <td>Pedestrian involved, fire/smoke, high speed</td>
+                    </tr>
+                    <tr>
+                        <td><span class="severity-dot" style="background: #ff5c33"></span>HIGH</td>
+                        <td>4.0 - 5.9</td>
+                        <td>Multi-vehicle, rollover, significant damage</td>
+                    </tr>
+                    <tr>
+                        <td><span class="severity-dot" style="background: #ffbe0b"></span>MEDIUM</td>
+                        <td>2.0 - 3.9</td>
+                        <td>Two vehicles, moderate impact</td>
+                    </tr>
+                    <tr>
+                        <td><span class="severity-dot" style="background: #06d6a0"></span>LOW</td>
+                        <td>
+                            < 2.0</td>
+                        <td>Minor collision, single vehicle</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- API Endpoints -->
+        <section class="section">
+            <h2>🔌 API Endpoints</h2>
+            <p>RESTful API built with FastAPI. Interactive documentation at <code>/docs</code></p>
+
+            <h3>Incidents</h3>
+            <div class="api-endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/v1/incidents/</code>
+                <span style="color: var(--text-secondary)">List all incidents</span>
+            </div>
+            <div class="api-endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/v1/incidents/active</code>
+                <span style="color: var(--text-secondary)">Get active incidents</span>
+            </div>
+            <div class="api-endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/v1/incidents/{id}/verify</code>
+                <span style="color: var(--text-secondary)">Verify an incident</span>
+            </div>
+
+            <h3>Dispatch</h3>
+            <div class="api-endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/v1/dispatch/send-police-report</code>
+                <span style="color: var(--text-secondary)">Send report to police</span>
+            </div>
+            <div class="api-endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/v1/dispatch/ambulance</code>
+                <span style="color: var(--text-secondary)">Dispatch ambulance</span>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="section">
+            <h2>🛠️ Technology Stack</h2>
+
+            <h3>Backend</h3>
+            <div class="tech-stack">
+                <div class="tech-item">🐍 Python 3.9+</div>
+                <div class="tech-item">⚡ FastAPI</div>
+                <div class="tech-item">🗄️ SQLAlchemy</div>
+                <div class="tech-item">🐘 PostgreSQL/SQLite</div>
+                <div class="tech-item">🔄 WebSockets</div>
+            </div>
+
+            <h3>ML Engine</h3>
+            <div class="tech-stack">
+                <div class="tech-item">🔥 PyTorch</div>
+                <div class="tech-item">🎯 YOLOv8 (Ultralytics)</div>
+                <div class="tech-item">📷 OpenCV</div>
+                <div class="tech-item">🔢 NumPy</div>
+            </div>
+
+            <h3>Frontend</h3>
+            <div class="tech-stack">
+                <div class="tech-item">⚛️ React 18</div>
+                <div class="tech-item">⚡ Vite</div>
+                <div class="tech-item">🗺️ Leaflet Maps</div>
+                <div class="tech-item">📊 Recharts</div>
+                <div class="tech-item">🎨 CSS3</div>
+            </div>
+        </section>
+
+        <!-- Quick Start -->
+        <section class="section">
+            <h2>🚀 Quick Start</h2>
+
+            <div class="feature-highlight">
+                <strong>One-Click Setup (Windows)</strong>
+                <p>After cloning, double-click <code>run.bat</code> to install everything and start services.</p>
+            </div>
+
+            <div class="code-block">
+                <code>
+# Clone repository<br>
+git clone https://github.com/SriHarshavarthM/Accident_Response_Model.git<br>
+cd Accident_Response_Model<br><br>
+# Run the setup script<br>
+run.bat<br><br>
+# Access the dashboard<br>
+# Frontend: http://localhost:3000<br>
+# Backend:  http://localhost:8000<br>
+# API Docs: http://localhost:8000/docs
+                </code>
+            </div>
+        </section>
+
+        <!-- India Compliance -->
+        <section class="section">
+            <h2>🇮🇳 India-Specific Compliance</h2>
+
+            <div class="compliance-box">
+                <h4>⚠️ Important Legal Note</h4>
+                <p>This system generates <strong>Preliminary Incident Intimations</strong>, NOT official First
+                    Information Reports (FIRs). Human verification is mandatory before any dispatch action to comply
+                    with Indian legal requirements.</p>
+            </div>
+
+            <h3>Supported Emergency Services</h3>
+            <ul style="color: var(--text-secondary); padding-left: 25px;">
+                <li><strong>ERSS-112</strong> - Unified emergency response number</li>
+                <li><strong>108 Ambulance</strong> - State emergency medical services</li>
+                <li><strong>Police API Integration</strong> - State police portal connectivity</li>
+            </ul>
+
+            <h3>Audit Trail</h3>
+            <p>All actions are logged with timestamps for legal compliance:</p>
+            <ul style="color: var(--text-secondary); padding-left: 25px;">
+                <li>Incident detection time</li>
+                <li>Operator verification timestamp</li>
+                <li>Report sent confirmation</li>
+                <li>Ambulance dispatch status</li>
+            </ul>
+        </section>
+
+        <!-- Dashboard Features -->
+        <section class="section">
+            <h2>🎛️ Dashboard Features</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>📹 Live Incident Feed</h4>
+                    <p>Color-coded cards by severity with real-time updates via WebSocket. Flash alerts for critical
+                        incidents.</p>
+                </div>
+                <div class="card">
+                    <h4>🗺️ Interactive Map</h4>
+                    <p>Leaflet map with custom markers showing incident locations. Click for quick details popup.</p>
+                </div>
+                <div class="card">
+                    <h4>📊 Analytics Dashboard</h4>
+                    <p>Recharts visualizations including daily trends, severity distribution, zone analysis, and
+                        response times.</p>
+                </div>
+                <div class="card">
+                    <h4>🎬 Video Playback</h4>
+                    <p>View incident video clips and snapshots directly in the detail page for verification.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>🚗 Built for Smart Cities, Highways, and Government Pilots</p>
+        <p style="margin-top: 10px; font-size: 0.875rem;">Accident Incident Responder System © 2026</p>
+    </footer>
+</body>
+
+</html>

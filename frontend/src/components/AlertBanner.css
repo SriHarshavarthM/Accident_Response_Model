@@ -1,0 +1,54 @@
+.alert-banner {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.9) 0%, rgba(114, 9, 183, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 95;
+    color: white;
+}
+
+.alert-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.alert-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.alert-text strong {
+    font-size: 1rem;
+}
+
+.alert-text span {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.alert-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.alert-actions .btn-danger {
+    background: white;
+    color: var(--severity-critical);
+}
+
+.alert-actions .btn-outline {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.alert-actions .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

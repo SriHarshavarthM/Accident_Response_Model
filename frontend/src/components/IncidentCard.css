@@ -1,0 +1,92 @@
+.incident-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    animation: slideIn 0.3s ease-out;
+}
+
+.incident-card:hover {
+    transform: translateX(4px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.incident-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+.incident-header .status {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.incident-body {
+    margin-bottom: var(--spacing-sm);
+}
+
+.incident-type {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+}
+
+.incident-id {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: monospace;
+}
+
+.incident-meta {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.incident-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.confidence-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--bg-secondary);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.confidence-text {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* Critical card animation */
+.incident-card.critical-flash {
+    border-color: var(--severity-critical);
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+}

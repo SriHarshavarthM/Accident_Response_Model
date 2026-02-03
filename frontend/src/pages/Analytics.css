@@ -1,0 +1,59 @@
+.analytics {
+    animation: fadeIn 0.3s ease;
+}
+
+.time-select {
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.time-select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+@media (max-width: 1024px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-card {
+    min-height: 380px;
+}
+
+.chart-card h3 {
+    margin-bottom: var(--spacing-md);
+}
+
+.chart-container {
+    height: 300px;
+}
+
+/* Recharts dark theme overrides */
+.recharts-text {
+    fill: var(--text-secondary) !important;
+}
+
+.recharts-cartesian-grid line {
+    stroke: rgba(255, 255, 255, 0.05) !important;
+}
+
+.recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.recharts-legend-item-text {
+    color: var(--text-secondary) !important;
+}

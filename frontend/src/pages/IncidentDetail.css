@@ -1,0 +1,173 @@
+.incident-detail {
+    animation: fadeIn 0.3s ease;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.back-btn {
+    flex-shrink: 0;
+}
+
+.detail-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.detail-title h1 {
+    font-family: monospace;
+    font-size: 1.5rem;
+}
+
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pill.status-detected {
+    background: rgba(0, 180, 216, 0.2);
+    color: var(--status-detected);
+}
+
+.status-pill.status-verified {
+    background: rgba(67, 97, 238, 0.2);
+    color: var(--status-verified);
+}
+
+.status-pill.status-reported {
+    background: rgba(114, 9, 183, 0.2);
+    color: var(--status-reported);
+}
+
+.status-pill.status-dispatched {
+    background: rgba(255, 0, 110, 0.2);
+    color: var(--status-dispatched);
+}
+
+.status-pill.status-closed,
+.status-pill.status-false_alarm {
+    background: rgba(6, 214, 160, 0.2);
+    color: var(--status-closed);
+}
+
+.detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1024px) {
+    .detail-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.media-section h3,
+.details-section h3 {
+    margin-bottom: var(--spacing-md);
+}
+
+.description-box {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent-primary);
+}
+
+.description-box strong {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.description-box p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.verification-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(6, 214, 160, 0.1);
+    border-radius: var(--radius-sm);
+    color: var(--severity-low);
+    font-size: 0.875rem;
+}
+
+/* Loading and Error States */
+.loading-container,
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: var(--spacing-md);
+    color: var(--text-secondary);
+}
+
+/* Modal Enhancements */
+.confirm-content .icon {
+    margin: 0 auto var(--spacing-md);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-content .icon.success {
+    background: rgba(6, 214, 160, 0.2);
+    color: var(--severity-low);
+}
+
+.confirm-content .icon.warning {
+    background: rgba(255, 190, 11, 0.2);
+    color: var(--severity-medium);
+}
+
+.confirm-content .icon.primary {
+    background: rgba(67, 97, 238, 0.2);
+    color: var(--accent-primary);
+}
+
+.confirm-content .icon.danger {
+    background: rgba(255, 0, 110, 0.2);
+    color: var(--severity-critical);
+}
+
+.confirm-content .note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.ambulance-details {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    text-align: left;
+}
+
+.ambulance-details p {
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.875rem;
+}
